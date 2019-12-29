@@ -1,0 +1,17 @@
+<nz-page-header (nzBack)="goBack()" nzBackIcon class="app-page-header">
+  <nz-page-header-title>分配用户</nz-page-header-title>
+  <nz-page-header-tags>
+    <nz-tag *ngIf="!!role" [nzColor]="'red'">{{ role.name }}</nz-tag>
+  </nz-page-header-tags>
+</nz-page-header>
+<nz-card [nzBordered]="false">
+  <div [style.margin-bottom.px]="8">
+    <button nz-button nzType="primary" nz-popconfirm nzPopconfirmTitle="确认保存？" (nzOnConfirm)="goSave()"
+      [disabled]="!role">
+      <i nz-icon nzType="save"></i>
+      <span>保存</span>
+    </button>
+  </div>
+  <nz-divider nzDashed nzType="horizontal"></nz-divider>
+  <nz-tree #treeComponent nzShowIcon [nzData]="treeNodes" nzExpandAll nzCheckable></nz-tree>
+</nz-card>

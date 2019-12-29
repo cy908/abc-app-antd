@@ -1,1 +1,48 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~ng-zorro-antd/ng-zorro-antd.less';
+
+// 滚动条样式-START
+
+.ant-anchor-wrapper,
+.ant-dialog-wrap,
+.ant-drawer-body,
+.ant-drawer-wrapper-body,
+.ant-layout-sider,
+body,
+textarea.ant-input {
+  scrollbar-color: rgba(0, 0, 0, 0.3) #6e6e6e;
+  scrollbar-width: thin;
+}
+
+.ant-anchor-wrapper::-webkit-scrollbar,
+.ant-dialog-wrap::-webkit-scrollbar,
+.ant-drawer-body::-webkit-scrollbar,
+.ant-drawer-wrapper-body::-webkit-scrollbar,
+.ant-layout-sider::-webkit-scrollbar,
+body::-webkit-scrollbar,
+textarea.ant-input::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.ant-anchor-wrapper::-webkit-scrollbar-track,
+.ant-dialog-wrap::-webkit-scrollbar-track,
+.ant-drawer-body::-webkit-scrollbar-track,
+.ant-drawer-wrapper-body::-webkit-scrollbar-track,
+.ant-layout-sider::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+textarea.ant-input::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.ant-anchor-wrapper::-webkit-scrollbar-thumb,
+.ant-dialog-wrap::-webkit-scrollbar-thumb,
+.ant-drawer-body::-webkit-scrollbar-thumb,
+.ant-drawer-wrapper-body::-webkit-scrollbar-thumb,
+.ant-layout-sider::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+textarea.ant-input::-webkit-scrollbar-thumb {
+  background-color: #6e6e6e;
+  outline: #333 solid 1px;
+}
+
+// 滚动条样式-END

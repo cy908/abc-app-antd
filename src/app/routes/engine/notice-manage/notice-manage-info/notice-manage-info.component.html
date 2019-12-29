@@ -1,0 +1,38 @@
+<nz-page-header (nzBack)="goBack()" nzBackIcon class="app-page-header">
+  <nz-page-header-title>通知查看</nz-page-header-title>
+</nz-page-header>
+<nz-card [nzBordered]="false">
+  <nz-descriptions nzBordered *ngIf="!!notice" [nzColumn]="1">
+    <nz-descriptions-item nzTitle="标题">{{ notice.title }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="时间">
+      <span>{{ notice.startTime | date: 'yyyy-MM-dd HH:mm' }}</span>
+      <span [style.margin-left.px]="8" [style.margin-right.px]="8">~</span>
+      <span>{{ notice.endTime | date: 'yyyy-MM-dd HH:mm' }}</span>
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="内容">
+      <pre>{{ notice.content }}</pre>
+    </nz-descriptions-item>
+  </nz-descriptions>
+  <nz-card [style.margin-top.px]="8">
+    <nz-table [style.margin.px]="-24" nzSize="middle" #basicTable [nzData]="listOfData" [nzLoading]="departmentLoading"
+      [nzShowPagination]="false">
+      <thead>
+        <tr>
+          <th [style.width.px]="100" nzShowCheckbox [(nzChecked)]="isAllChecked" [nzIndeterminate]="isIndeterminate"
+            (nzCheckedChange)="checkAll($event)" [nzDisabled]="true"></th>
+          <th>名称</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"
+            [nzDisabled]="true"></td>
+          <td>
+            <span [style.margin-right.px]="1" *ngFor="let _ of data.order.substr(data.orderTopSize).split('')">-</span>
+            <span [style.margin-left.px]="2">{{ data.name }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</nz-card>

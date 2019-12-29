@@ -1,0 +1,104 @@
+<nz-layout>
+  <nz-header class="app-header">
+    <div class="app-header-logo-warp" [class.app-header-logo-warp-collapsed]="isCollapsed"
+      [class.app-header-logo-warp-expanded]="!isCollapsed">
+      <a href="/" target="_blank">
+        <div class="app-header-logo">
+          <img class="app-header-logo-img" src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+          <span class="app-header-logo-title">{{ title }}</span>
+        </div>
+      </a>
+    </div>
+    <div class="app-header-nav-wrap">
+      <div class="app-header-nav">
+        <div class="app-header-nav-item" (click)="isCollapsed = !isCollapsed">
+          <i nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+        </div>
+        <div class="app-header-nav-item" (click)="goMain()">
+          <i nz-icon nzType="home"></i>
+        </div>
+      </div>
+      <div class="app-header-nav">
+        <div class="app-header-nav-item" (click)="goNotice()">
+          <nz-badge [nzCount]="noticeCount">
+            <i nz-icon nzType="bell"></i>
+          </nz-badge>
+        </div>
+        <div class="app-header-nav-item" nz-dropdown [nzDropdownMenu]="settingMenu">
+          <i nz-icon nzType="setting"></i>
+        </div>
+        <nz-dropdown-menu #settingMenu="nzDropdownMenu">
+          <ul nz-menu nzSelectable>
+            <li nz-menu-item>
+              <i nz-icon nzType="user"></i>
+              <span *ngIf="!!user">{{ user.name }}</span>
+            </li>
+            <li nz-menu-item (click)="showPasswordModal()">
+              <i nz-icon nzType="edit"></i>
+              <span>修改密码</span>
+            </li>
+            <li nz-menu-divider></li>
+            <li nz-menu-item (click)="exitApp()">
+              <i nz-icon nzType="logout"></i>
+              <span>退出登录</span>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+    </div>
+  </nz-header>
+  <nz-layout>
+    <nz-sider class="app-sidebar" nzCollapsible nzBreakpoint="md" [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+      <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+        <ng-container *ngFor="let menu of menus">
+          <li *ngIf="!!menu.url" nz-menu-item nzMatchRouter>
+            <a [routerLink]="menu.url">
+              <i nz-icon [nzType]="menu.antdIcon" [nzTheme]="menu.antdIconTheme" [nzTwotoneColor]="menu.antdIconTwotone"></i>
+              <span>{{ menu.name }}</span>
+            </a>
+          </li>
+          <li *ngIf="!menu.url" nz-submenu [nzTitle]="menu.name" [nzIcon]="menu.antdIcon" nzOpen>
+            <ul>
+              <li *ngFor="let child of menu.children" nz-menu-item nzMatchRouter>
+                <a [routerLink]="child.url">
+                  <i nz-icon [nzType]="child.antdIcon"></i>
+                  <span>{{ child.name }}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ng-container>
+      </ul>
+    </nz-sider>
+    <nz-content>
+      <div class="app-content" [class.app-content-collapsed]="isCollapsed" [class.app-content-expanded]="!isCollapsed">
+        <router-outlet></router-outlet>
+        <nz-back-top></nz-back-top>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
+
+<nz-modal [(nzVisible)]="isPasswordVisible" nzTitle="修改密码" (nzOnCancel)="handlePasswordCancel()"
+  (nzOnOk)="handlePasswordOk()" [nzOkLoading]="passwordLoading" [nzClosable]="false">
+  <form nz-form [formGroup]="passwordForm">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>旧密码</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input type="password" nz-input formControlName="oldPassword" (ngModelChange)="validateNewPassword()" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>新密码</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input type="password" nz-input formControlName="newPassword" (ngModelChange)="validateConfirmPassword()" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>确认密码</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input type="password" nz-input formControlName="confirmPassword" />
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

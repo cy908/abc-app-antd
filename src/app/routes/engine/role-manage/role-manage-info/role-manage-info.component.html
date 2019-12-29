@@ -1,0 +1,17 @@
+<nz-page-header (nzBack)="goBack()" nzBackIcon class="app-page-header">
+  <nz-page-header-title>角色查看</nz-page-header-title>
+</nz-page-header>
+<nz-card [nzBordered]="false">
+  <nz-descriptions nzBordered *ngIf="!!role">
+    <nz-descriptions-item nzTitle="名称">{{ role.name }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="代码">{{ role.code }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="排序">{{ role.order }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="状态">
+      <nz-badge nzStatus="success" nzText="启用" *ngIf="!!role.enable"></nz-badge>
+      <nz-badge nzStatus="error" nzText="禁用" *ngIf="!role.enable"></nz-badge>
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="备注">
+      <pre>{{ role.note }}</pre>
+    </nz-descriptions-item>
+  </nz-descriptions>
+</nz-card>

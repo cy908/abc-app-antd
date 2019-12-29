@@ -1,0 +1,81 @@
+<nz-page-header class="app-page-header">
+  <nz-page-header-title>部门管理</nz-page-header-title>
+</nz-page-header>
+<nz-card [nzBordered]="false">
+  <form nz-form [nzLayout]="'inline'" [formGroup]="form" (ngSubmit)="submitForm()">
+    <div nz-row>
+      <div nz-col nzMd="8" nzSm="24">
+        <nz-form-item nzFlex="true">
+          <nz-form-label [style.width]="'auto'" [style.padding-right.px]="8">关键字</nz-form-label>
+          <nz-form-control [style.flex]="1">
+            <input nz-input formControlName="search" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24" [nzSpan]="24">
+        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="loading">查询</button>
+      </div>
+    </div>
+  </form>
+  <div [style.margin-top.px]="8" [style.margin-bottom.px]="8">
+    <button nz-button nzType="primary" (click)="goAdd(0)">
+      <i nz-icon nzType="plus"></i>
+      <span>新建</span>
+    </button>
+  </div>
+  <div [style.margin-bottom.px]="8">
+    <nz-alert [nzType]="'info'" [nzShowIcon]="true" [nzMessage]="message">
+      <ng-template #message>
+        <span>已选择</span>
+        <strong [style.margin-left.px]="8" [style.margin-right.px]="8">{{ numberOfChecked }}</strong>
+        <span>项</span>
+        <a [style.margin-left.px]="8" *ngIf="numberOfChecked > 0" (click)="clearCheck()">清空</a>
+      </ng-template>
+    </nz-alert>
+  </div>
+  <nz-table nzSize="middle" nzShowPagination nzShowSizeChanger [nzShowTotal]="rangeTemplate" #basicTable
+    [nzFrontPagination]="false" [nzData]="listOfData" [nzLoading]="loading" [nzTotal]="total"
+    [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
+    (nzPageSizeChange)="searchData(true)">
+    <thead>
+      <tr>
+        <th nzShowCheckbox [(nzChecked)]="isAllChecked" [nzIndeterminate]="isIndeterminate"
+          (nzCheckedChange)="checkAll($event)"></th>
+        <th>名称</th>
+        <th>代码</th>
+        <th>排序</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+        <td>
+          <span [style.margin-right.px]="1" *ngFor="let _ of data.order.substr(data.orderTopSize).split('')">-</span>
+          <span [style.margin-left.px]="2">{{ data.name }}</span>
+        </td>
+        <td>{{ data.code }}</td>
+        <td>{{ data.order }}</td>
+        <td>
+          <nz-badge nzStatus="success" nzText="启用" *ngIf="!!data.enable"></nz-badge>
+          <nz-badge nzStatus="error" nzText="禁用" *ngIf="!data.enable"></nz-badge>
+        </td>
+        <td>
+          <a (click)="goAdd(data.parentId)">添加同级</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="goAdd(data.id)">添加下级</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="goInfo(data.id)">查看</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="goEdit(data.id)">修改</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a nz-popconfirm nzPopconfirmTitle="确认删除？" (nzOnConfirm)="goDelete(data.id)">删除</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <ng-template #rangeTemplate let-range="range" let-total>
+    <span>第 {{ range[0] }} - {{ range[1] }} 条、共 {{ total }} 条</span>
+  </ng-template>
+</nz-card>

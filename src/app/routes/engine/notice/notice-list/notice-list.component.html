@@ -1,0 +1,29 @@
+<nz-page-header class="app-page-header">
+  <nz-page-header-title>通知</nz-page-header-title>
+</nz-page-header>
+<nz-card [nzBordered]="false">
+  <nz-table nzSize="middle" nzShowPagination nzShowSizeChanger [nzShowTotal]="rangeTemplate" #basicTable
+    [nzFrontPagination]="false" [nzData]="listOfData" [nzLoading]="loading" [nzTotal]="total"
+    [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
+    (nzPageSizeChange)="searchData(true)">
+    <thead>
+      <tr>
+        <th>标题</th>
+        <th>时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td><a (click)="goInfo(data.id)">{{ data.title }}</a></td>
+        <td>
+          <span>{{ data.startTime | date: 'yyyy-MM-dd HH:mm' }}</span>
+          <span [style.margin-left.px]="5" [style.margin-right.px]="5">-</span>
+          <span>{{ data.endTime | date: 'yyyy-MM-dd HH:mm' }}</span>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <ng-template #rangeTemplate let-range="range" let-total>
+    <span>第 {{ range[0] }} - {{ range[1] }} 条、共 {{ total }} 条</span>
+  </ng-template>
+</nz-card>

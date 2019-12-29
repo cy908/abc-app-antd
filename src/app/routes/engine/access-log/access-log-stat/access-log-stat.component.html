@@ -1,0 +1,54 @@
+<div class="container">
+  <div nz-row nzGutter="12">
+    <div nz-col nzSpan="24">
+      <nz-card [nzBordered]="false" nzTitle="60分钟访问情况" [nzExtra]="extraByMinute">
+        <ng-template #extraByMinute>
+          <a nz-tooltip nzTooltipTitle="刷新" nzTooltipPlacement="bottom" (click)="byMinute.refreshChart()">
+            <i nz-icon nzType="reload"></i>
+          </a>
+        </ng-template>
+        <app-stat-by-type statType="byMinute" #byMinute></app-stat-by-type>
+      </nz-card>
+    </div>
+    <div nz-col nzMd="12" nzSm="24">
+      <nz-card [nzBordered]="false" nzTitle="24小时访问情况" [nzExtra]="extraByHour">
+        <ng-template #extraByHour>
+          <a nz-tooltip nzTooltipTitle="刷新" nzTooltipPlacement="bottom" (click)="byHour.refreshChart()">
+            <i nz-icon nzType="reload"></i>
+          </a>
+        </ng-template>
+        <app-stat-by-type statType="byHour" #byHour></app-stat-by-type>
+      </nz-card>
+    </div>
+    <div nz-col nzMd="12" nzSm="24">
+      <nz-card [nzBordered]="false" nzTitle="30天访问情况" [nzExtra]="extraByDay">
+        <ng-template #extraByDay>
+          <a nz-tooltip nzTooltipTitle="刷新" nzTooltipPlacement="bottom" (click)="byDay.refreshChart()">
+            <i nz-icon nzType="reload"></i>
+          </a>
+        </ng-template>
+        <app-stat-by-type statType="byDay" #byDay></app-stat-by-type>
+      </nz-card>
+    </div>
+    <div nz-col nzMd="12" nzSm="24">
+      <nz-card [nzBordered]="false" nzTitle="按月查看" [nzExtra]="extraByMonth">
+        <ng-template #extraByMonth>
+          <a nz-tooltip nzTooltipTitle="刷新" nzTooltipPlacement="bottom" (click)="byMonth.refreshChart()">
+            <i nz-icon nzType="reload"></i>
+          </a>
+        </ng-template>
+        <app-stat-by-type chartType="column" statType="byMonth" #byMonth></app-stat-by-type>
+      </nz-card>
+    </div>
+    <div nz-col nzMd="12" nzSm="24">
+      <nz-card [nzBordered]="false" nzTitle="按年查看" [nzExtra]="extraByYear">
+        <ng-template #extraByYear>
+          <a nz-tooltip nzTooltipTitle="刷新" nzTooltipPlacement="bottom" (click)="byYear.refreshChart()">
+            <i nz-icon nzType="reload"></i>
+          </a>
+        </ng-template>
+        <app-stat-by-type chartType="column" statType="byYear" #byYear></app-stat-by-type>
+      </nz-card>
+    </div>
+  </div>
+</div>

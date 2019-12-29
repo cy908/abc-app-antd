@@ -1,0 +1,30 @@
+<nz-layout>
+  <nz-content class="app-content" [style.background-image]="'url(assets/image/bg.jpg)'">
+    <nz-card class="app-login" [nzTitle]="title" @slideToBottom>
+      <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="user" nzSize="large">
+              <input type="text" nz-input formControlName="username" placeholder="用户名">
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="lock" nzSize="large">
+              <input type="password" nz-input formControlName="password" placeholder="密码">
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <button type="submit" nz-button nzType="primary" nzSize="large" [nzLoading]="loading" nzBlock>登录</button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+      <div class="app-copyright">
+        <span nz-text nzType="secondary">{{ copyright }}</span>
+      </div>
+    </nz-card>
+  </nz-content>
+</nz-layout>

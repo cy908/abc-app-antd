@@ -1,0 +1,65 @@
+<nz-page-header class="app-page-header">
+  <nz-page-header-title>访问日志</nz-page-header-title>
+</nz-page-header>
+<nz-card [nzBordered]="false">
+  <form nz-form [nzLayout]="'inline'" [formGroup]="form" (ngSubmit)="submitForm()">
+    <div nz-row>
+      <div nz-col nzMd="8" nzSm="24">
+        <nz-form-item [nzFlex]="true">
+          <nz-form-label [style.width]="'auto'" [style.padding-right.px]="8">关键字</nz-form-label>
+          <nz-form-control [style.flex]="1">
+            <input nz-input formControlName="search" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24">
+        <nz-form-item [nzFlex]="true">
+          <nz-form-control [style.flex]="1">
+            <button type="submit" nz-button [nzType]="'primary'" [nzLoading]="loading">查询</button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <div [style.margin-bottom.px]="8">
+    <nz-alert [nzType]="'info'" [nzShowIcon]="true" [nzMessage]="message">
+      <ng-template #message>
+        <span>已选择</span>
+        <strong [style.margin-left.px]="8" [style.margin-right.px]="8">{{ numberOfChecked }}</strong>
+        <span>项</span>
+        <a [style.margin-left.px]="8" *ngIf="numberOfChecked > 0" (click)="clearCheck()">清空</a>
+      </ng-template>
+    </nz-alert>
+  </div>
+  <nz-table nzSize="middle" nzShowPagination nzShowSizeChanger [nzShowTotal]="rangeTemplate" #basicTable
+    [nzFrontPagination]="false" [nzData]="listOfData" [nzLoading]="loading" [nzTotal]="total"
+    [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
+    (nzPageSizeChange)="searchData(true)">
+    <thead>
+      <tr>
+        <th nzShowCheckbox [(nzChecked)]="isAllChecked" [nzIndeterminate]="isIndeterminate"
+          (nzCheckedChange)="checkAll($event)"></th>
+        <th>访问IP</th>
+        <th>访问URL</th>
+        <th>访问用户</th>
+        <th>访问时间</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+        <td>{{ data.accessIP }}</td>
+        <td>{{ data.accessUrl }}</td>
+        <td>{{ data.accessUser }}</td>
+        <td>{{ data.accessTime | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+        <td>
+          <a (click)="goInfo(data.id)">查看</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <ng-template #rangeTemplate let-range="range" let-total>
+    <span>第 {{ range[0] }} - {{ range[1] }} 条、共 {{ total }} 条</span>
+  </ng-template>
+</nz-card>

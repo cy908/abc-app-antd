@@ -1,0 +1,57 @@
+<nz-page-header (nzBack)="goBack()" nzBackIcon class="app-page-header">
+  <nz-page-header-title>通知日志详情</nz-page-header-title>
+</nz-page-header>
+<nz-card [nzBordered]="false" *ngIf="!!noticeLog">
+  <nz-divider nzDashed nzText="日志信息" nzOrientation="left"></nz-divider>
+  <div nz-row>
+    <div nz-col nzXs="24" nzSm="12" nzMd="8">
+      <div class="app-info-label">日志类型</div>
+      <div class="app-info-detail">{{ noticeLog.logType }}</div>
+    </div>
+    <div nz-col nzXs="24" nzSm="12" nzMd="8">
+      <div class="app-info-label">操作人</div>
+      <div class="app-info-detail">{{ noticeLog.logUser }}</div>
+    </div>
+    <div nz-col nzXs="24" nzSm="12" nzMd="8">
+      <div class="app-info-label">操作时间</div>
+      <div class="app-info-detail">
+        <span>{{ noticeLog.logTime | date: 'yyyy-MM-dd HH:mm:ss' }}</span>
+      </div>
+    </div>
+  </div>
+  <nz-divider nzDashed nzText="通知信息" nzOrientation="left"></nz-divider>
+  <div nz-row>
+    <div nz-col nzXs="24" nzSm="12" nzMd="8">
+      <div class="app-info-label">标题</div>
+      <div class="app-info-detail">{{ noticeLog.notice.title }}</div>
+    </div>
+    <div nz-col nzXs="24" nzSm="12" nzMd="8">
+      <div class="app-info-label">时间</div>
+      <div class="app-info-detail">
+        <span>{{ noticeLog.notice.startTime | date: 'yyyy-MM-dd HH:mm' }}</span>
+        <span [style.margin-left.px]="8" [style.margin-right.px]="8">~</span>
+        <span>{{ noticeLog.notice.endTime | date: 'yyyy-MM-dd HH:mm' }}</span>
+      </div>
+    </div>
+    <div nz-col nzSpan="24">
+      <div class="app-info-label">内容</div>
+      <div class="app-info-detail">
+        <pre>{{ noticeLog.notice.content }}</pre>
+      </div>
+    </div>
+  </div>
+  <nz-divider nzDashed nzText="通知部门" nzOrientation="left"></nz-divider>
+  <nz-table nzSize="middle" #basicTable [nzData]="listOfData" [nzLoading]="departmentLoading"
+    [nzShowPagination]="false">
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"
+          [nzDisabled]="true"></td>
+        <td>
+          <span [style.margin-right.px]="1" *ngFor="let _ of data.order.substr(data.orderTopSize).split('')">-</span>
+          <span [style.margin-left.px]="2">{{ data.name }}</span>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

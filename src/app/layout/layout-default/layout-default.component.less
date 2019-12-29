@@ -1,0 +1,147 @@
+@app-header-height: 64px;
+@app-sidebar-width: 200px;
+
+:host {
+  ::ng-deep {
+    .app-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100vw;
+      height: @app-header-height;
+      padding: 0 16px;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .app-header-logo-warp {
+      height: @app-header-height;
+      line-height: @app-header-height;
+      margin-left: -16px;
+      overflow: hidden;
+      transition: width .3s;
+
+      .app-header-logo {
+        height: @app-header-height;
+        line-height: @app-header-height;
+        overflow: hidden;
+
+        .app-header-logo-img {
+          width: 32px;
+          height: 32px;
+          margin-left: 24px;
+        }
+
+        .app-header-logo-title {
+          margin-left: 16px;
+          margin-right: 16px;
+          font-weight: 600;
+          font-size: 14px;
+          color: #fff;
+        }
+      }
+    }
+
+    .app-header-logo-warp-collapsed {
+      width: 80px;
+    }
+
+    .app-header-logo-warp-expanded {
+      width: @app-sidebar-width;
+    }
+
+    .app-header-nav-wrap {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: space-between;
+
+      .app-header-nav {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+
+        .app-header-nav-item {
+          display: block;
+          min-width: 42px;
+          padding: 8px 2px;
+          font-size: 20px;
+          line-height: 100%;
+          text-align: center;
+          border-radius: 2px;
+          cursor: pointer;
+          color: #fff;
+          transition: background-color .3s;
+
+          .ant-badge {
+            font-size: 20px;
+            line-height: 100%;
+          }
+        }
+
+        .app-header-nav-item:hover {
+          color: #fff;
+          background-color: rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+
+    .app-sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 10;
+      margin-top: @app-header-height;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-color: #fff;
+      box-shadow: 1px 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .app-content {
+      padding: 24px;
+      margin-top: @app-header-height;
+      min-height: calc(100vh - @app-header-height);
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      .app-page-header {
+        margin-top: -24px;
+        margin-bottom: 24px;
+        margin-left: -24px;
+        margin-right: -24px;
+        background-color: #fff;
+      }
+
+      .app-info-label {
+        display: table-cell;
+        white-space: nowrap;
+        font-weight: bold;
+      }
+      
+      .app-info-label::after {
+        content: '：';
+      }
+      
+      .app-info-detail {
+        display: table-cell;
+        width: 100%;
+      }
+      
+    }
+
+    .app-content-collapsed {
+      margin-left: 80px;
+    }
+
+    .app-content-expanded {
+      margin-left: @app-sidebar-width;
+    }
+
+  }
+}

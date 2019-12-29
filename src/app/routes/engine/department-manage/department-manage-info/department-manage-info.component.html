@@ -1,0 +1,18 @@
+<nz-page-header (nzBack)="goBack()" nzBackIcon class="app-page-header">
+  <nz-page-header-title>部门查看</nz-page-header-title>
+</nz-page-header>
+<nz-card [nzBordered]="false">
+  <nz-descriptions nzBordered nzSize="middle" *ngIf="!!department">
+    <nz-descriptions-item nzTitle="名称">{{ department.name }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="代码">{{ department.code }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="电话">{{ department.phone }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="地址">{{ department.address }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="状态">
+      <nz-badge nzStatus="success" nzText="启用" *ngIf="!!department.enable"></nz-badge>
+      <nz-badge nzStatus="error" nzText="禁用" *ngIf="!department.enable"></nz-badge>
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="备注">
+      <pre>{{ department.note }}</pre>
+    </nz-descriptions-item>
+  </nz-descriptions>
+</nz-card>
